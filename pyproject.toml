@@ -1,0 +1,61 @@
+[project]
+name = "welfare"
+version = "0.1.0"
+requires-python = ">=3.14"
+dependencies = [
+    "anthropic>=2.3.0",
+    "pandas>=3.1.0",
+    "pydantic>=2.14.2",
+    "requests>=2.34.2",
+]
+
+[dependency-groups]
+dev = [
+    "anti-slop-py>=0.1.1",
+    "flake8>=7.5.0",
+    "flake8-pydantic>=0.4.0",
+    "ipykernel>=7.4.0",
+    "mypy>=2.4.1",
+    "nbqa>=1.9.1",
+    "pandas-stubs>=3.1.0.261029",
+    "pytest>=9.2.0",
+    "ruff>=0.17.3",
+    "types-requests>=2.33.0.20261030",
+]
+
+# --- anti-slop-py layer 1: Ruff ---
+[tool.ruff]
+extend-exclude = [".venv"]
+
+[tool.ruff.lint]
+extend-select = [
+    "ANN401", # bans `Any` in parameters and returns
+    "PGH003", # bans blanket `# type: ignore`
+    "B009",   # bans getattr with a constant name
+    "B010",   # bans setattr with a constant name
+    "TID251", # banned APIs, listed below
+]
+
+[tool.ruff.lint.flake8-tidy-imports.banned-api]
+"unittest.mock.patch".msg = "Module mocking hides real seams; inject the dependency instead (anti-slop no-module-mocking)."
+# typing.Any ban omitted: mypy disallow_any_explicit enforces it below.
+
+# --- anti-slop-py layer 2: mypy ---
+[tool.mypy]
+plugins = ["pydantic.mypy"]
+exclude = ['^\.venv/']
+disallow_any_explicit = true
+disallow_any_generics = true
+disallow_untyped_defs = true
+warn_return_any = true
+warn_redundant_casts = true
+warn_unused_ignores = true
+
+[tool.pydantic-mypy]
+init_forbid_extra = true
+init_typed = true
+warn_required_dynamic_aliases = true
+
+[tool.pytest.ini_options]
+pythonpath = ["."]
+testpaths = ["tests"]

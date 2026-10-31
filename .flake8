@@ -1,0 +1,6 @@
+# anti-slop-py layer 3: custom ASP rules (registered by the anti-slop-py package)
+# ASD: Pydantic group (pydantic is a direct dependency), PYD: flake8-pydantic
+[flake8]
+select = ASP,ASD,PYD
+enable-extensions = ASD
+extend-exclude = .venv

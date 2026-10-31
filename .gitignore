@@ -1,0 +1,27 @@
+# 비밀 정보 (data.go.kr 인증키 등) - 절대 커밋하지 않는다
+.env
+.env.*
+
+# Python 가상환경과 캐시
+.venv/
+__pycache__/
+*.py[cod]
+.mypy_cache/
+.ruff_cache/
+.pytest_cache/
+
+# Jupyter
+.ipynb_checkpoints/
+
+# 노트북이 수집해 저장하는 원본 데이터 (매일 바뀌고 다시 받을 수 있음, 최대 12MB)
+/*.csv
+
+# 앞으로 추가할 React 컴포넌트 빌드 산출물
+node_modules/
+dist/
+build/
+
+# OS / 편집기
+.DS_Store
+.idea/
+.vscode/
